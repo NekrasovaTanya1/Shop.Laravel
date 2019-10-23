@@ -12,8 +12,10 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-image: url("{{asset('images/main2.jpg')}}");
+                -moz-background-size: 100% 100%;
+                background-size: 100% 100%;
+                color: chocolate;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -49,7 +51,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: chocolate;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -61,6 +63,12 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            a {
+                padding: 5px;
+                margin-right: 40px;
+                border:  1px solid darkorange;
+            }
         </style>
     </head>
     <body>
@@ -68,12 +76,32 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        @if(Auth::user()->isDisabled())
+                        <strong><a href="{{ url('/') }}" style="color:blueviolet; text-decoration: none">Главная</a></strong>
+                        @elseif(Auth::user()->isUser())
+                        <strong><a href="{{ url('/user/index') }}" style="color:blueviolet; text-decoration: none">Кабинет</a></strong>
+                        <strong><a href="{{ url('/') }}" style="color:blueviolet; text-decoration: none">Главная</a></strong>
+                        @elseif(Auth::user()->isVisitor())
+                        <strong><a href="{{ url('/u') }}" style="color:blueviolet; text-decoration: none">Главная</a></strong>
+                        @elseif(Auth::user()->isAdministrator())
+                        <strong><a href="{{ url('/user/index') }}" style="color:blueviolet; text-decoration: none">Панель Администратора</a></strong>
+                        <strong><a href="{{ url('/') }}" style="color:blueviolet; text-decoration: none">Главная</a></strong>
+                        @endif
+
+                        <strong>
+                            <a class="dropdown-item" href="{{ route('logout') }}" style="color:blueviolet; text-decoration: none"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                Выйти</a>
+                        </strong>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                            @csrf
+                        </form>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" style="color:blueviolet; text-decoration: none">Войти</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}" style="color:blueviolet; text-decoration: none">Регистрация</a>
                         @endif
                     @endauth
                 </div>
@@ -89,7 +117,7 @@
                 //dd($p);
                 @endphp
 
-                <div class="links">
+                {{-- <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
@@ -97,7 +125,7 @@
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </body>
