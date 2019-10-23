@@ -230,7 +230,8 @@ My Providers
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+// my alias
+        'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class,
     ],
 
 ];
